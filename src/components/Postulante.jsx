@@ -3,11 +3,11 @@ import Avatar from 'react-avatar';
 export const Postulante = ({ postulante }) => {
 	console.log(postulante)
 	return (
-		<div className='p-4  w-full flex items-center gap-6 '>
-			<div className='w-1/6 '>
+		<div className=' w-72 lg:w-96 p-4 text-center  flex items-center  '>
+			<div className='w-1/5 select-none'>
 				<Avatar className='text-shadow  card-shadow font-bold'round={true} name={postulante.nombrePostulante} size="50" />
 			</div>
-			<div className='w-4/6 text-center '>
+			<div className='w-3/5 text-center '>
 				<p className='font-bold '>
 					{postulante.nombrePostulante}
 				</p>
@@ -19,7 +19,7 @@ export const Postulante = ({ postulante }) => {
 					Estado: {postulante.activoPostulante == 1 ? <span className='text-green-600  font-bold'>Activo</span> : 'Inactivo'}
 				</p>
 			</div>
-			<div className='w-1/6 '>
+			<div className='w-1/5 '>
 				<i class="fas fa-info-circle text-2xl text-blue text-shadow-sm "></i>
 			</div>
 

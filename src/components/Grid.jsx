@@ -24,8 +24,8 @@ export const Grid = () => {
 						<p className='uppercase text-semibold '>Cargando</p><div className="fadeInDown lds-dual-ring-blue text-2xl	text-shadow "/>
 					</div>
 				: 
-					<div className='text-gray-800 flex flex-col items-center justify-center '>
-						<div className='pb-4 flex flex-col items-center justify-center'>
+					<div className='flex w-full text-gray-800 flex flex-col items-center justify-center '>
+						<div className=' pb-4 flex flex-col items-center justify-center'>
 							<p className=' max-w-min font-bold  uppercase border-b-2 border-green text-lg'>Postulantes</p>
 							<div className='w-3/4 pt-4'>
 								<input
