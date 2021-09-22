@@ -84,6 +84,10 @@ html, body{
 	border-color: #2594BC;
 }
 
+.hover-text-green:hover{
+	color: #2594BC;
+}
+
 .hover-bg-green:hover{
 	background-color:#2594BC;
 
@@ -94,6 +98,11 @@ html, body{
 }
 
 .hover-press-animation:hover{
+	transform: translateY(4px);
+	transition: all 0.1s ease-out;
+}
+
+.press-animation:active{
 	transform: translateY(4px);
 	transition: all 0.1s ease-out;
 }
