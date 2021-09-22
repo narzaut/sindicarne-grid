@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { GlobalContext } from '../context/GlobalState'
 import Avatar from 'react-avatar';
-export const Postulante = ({ postulante }) => {
-	console.log(postulante)
+export const Postulante = ({ postulante, index }) => {
+	const { modalPostulanteState } = useContext(GlobalContext)
+	const [modalPostulante, setModalPostulante] = modalPostulanteState;
+
 	return (
 		<div className=' w-80 lg:w-96 p-6 text-center  flex items-center  justify-center '>
 			<div className='w-1/6 select-none	'>
@@ -13,14 +16,14 @@ export const Postulante = ({ postulante }) => {
 				</p>
 				<p>
 					DNI: <span className='font-bold'>{postulante.dniPostulante}</span>
-					
+
 				</p>
 				<p>
 					Estado: {postulante.activoPostulante == 1 ? <span className='text-green-600  font-bold'>Activo</span> : 'Inactivo'}
 				</p>
 			</div>
 			<div className='text-center w-24'>
-				<p className='text-sm '><i class="fas fa-info-circle text-base text-blue text-shadow-sm "></i> Ver más</p>
+				<p className='text-sm cursor-pointer' onClick={() => setModalPostulante({ ...modalPostulante, status: true, currentId: index })}><i class=" fas fa-info-circle text-base text-blue  "></i> Ver más</p>
 			</div>
 
 		</div>
