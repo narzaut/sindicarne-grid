@@ -7,11 +7,12 @@ import { ModalPostulante } from './ModalPostulante'
 import { GlobalContext } from '../context/GlobalState'
 
 export const Grid = () => {
-	const [postulantes, setPostulantes] = useState([])
 	const [loading, setLoading] = useState(true)
 	const [searchTerm, setSearchTerm] = useState('')
-	const { modalPostulanteState } = useContext(GlobalContext)
+	const { modalPostulanteState, postulantesState } = useContext(GlobalContext)
   const [modalPostulante, setModalPostulante] = modalPostulanteState;
+	const [postulantes, setPostulantes] = postulantesState
+
 	//CONSUMO API
 	useEffect(async () => {
 		setPostulantes(await getPostulantes())
@@ -44,19 +45,25 @@ export const Grid = () => {
 								</div>
 							</div>
 							<div>
-								{postulantes.
-									filter((postulante) => {
-										if (searchTerm == '') {
-											return postulante
-										} else if (postulante.nombrePostulante.toLowerCase().includes(searchTerm.toLowerCase())) {
-											return postulante
-										} else if (postulante.dniPostulante.toLowerCase().includes(searchTerm.toLowerCase())) {
-											return postulante
-										} else {
-											return false
-										}
-									})
-									.map((postulante, index) => postulante ? <Postulante index={index} postulante={postulante} /> : <p>No se encuentra</p>)
+								{typeof postulantes == 'object' ?
+									postulantes.length > 0 ? 
+										postulantes
+											.filter((postulante) => {
+												if (searchTerm == '') {
+													return postulante
+												} else if (postulante.nombrePostulante.toLowerCase().includes(searchTerm.toLowerCase())) {
+													return postulante
+												} else if (postulante.dniPostulante.toLowerCase().includes(searchTerm.toLowerCase())) {
+													return postulante
+												} else {
+													return false
+												}
+											})
+											.map((postulante, index) => postulante ? <Postulante index={index} postulante={postulante} /> : <p>No se encuentra</p>)
+									: 
+									<p className='text-center px-10'>No hay postulantes cargados en la base de datos.</p>
+								:
+									<p className='text-center px-10'>Hubo un error. <br /> Intente nuevamente más tarde.</p>
 								}
 							</div>
 						</div>

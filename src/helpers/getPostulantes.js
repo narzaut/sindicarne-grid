@@ -2,13 +2,14 @@ import { authenticate  } from "./authenticate"
 
 export const getPostulantes = async () => {
 	let datas;
-	const token = await authenticate()
-	if (token == false) return false
+	const token = await authenticate('narz')
+
+	if (token.ok != true)	return token.message
 	
-	await fetch(`https://api.sindicarne.com.ar/postulantes`, {
+	await fetch(`//localhost:3030/postulantes`, {
 		headers: {
 			'Content-Type': 'application/json',
-			'x-auth-token': token
+			'x-auth-token': token.token
 		}
 	})
 	.then(response => response.json())

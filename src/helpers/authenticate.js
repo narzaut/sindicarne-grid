@@ -1,13 +1,13 @@
-export const authenticate = async () => {
+export const authenticate = async (user) => {
 	let token;
 
-	await fetch(`https://api.sindicarne.com.ar/auth`, {
+	await fetch(`//localhost:3030/auth`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({
-			user: "narz"
+			user: user
 		})	
 	})
 	.then(response => {
@@ -15,9 +15,9 @@ export const authenticate = async () => {
 	})
 	.then(json => {
 		if (json.ok == true) {
-			token = json.token
+			token = json
 		} else if (json.ok == false){
-			token = false
+			token = json
 		}
 	
 	})

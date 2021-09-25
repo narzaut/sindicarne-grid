@@ -19,11 +19,11 @@ export const Postulante = ({ postulante, index }) => {
 
 				</p>
 				<p>
-					Estado: {postulante.activoPostulante == 1 ? <span className='text-green-600  font-bold'>Activo</span> : 'Inactivo'}
+					Estado: {postulante.activoPostulante == 1 ? <span className='text-green-500  font-bold'>Activo</span> : <span className='text-red-500  font-bold'>Inactivo</span>}
 				</p>
 			</div>
 			<div className='text-center w-1/6 '>
-				<p className='flex text-xs cursor-pointer items-center' onClick={() => setModalPostulante({ ...modalPostulante, status: true, currentId: index })}><i class="pr-1 fas fa-info-circle text-base text-blue  "></i> VER</p>
+				<p className='flex text-xs cursor-pointer items-center' onClick={() => setModalPostulante({ ...modalPostulante, status: true, currentId: index })}><i className="pr-1 fas fa-info-circle text-base text-blue  "></i> VER</p>
 			</div>
 
 		</div>
