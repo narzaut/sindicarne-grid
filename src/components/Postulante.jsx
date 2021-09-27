@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from '../context/GlobalState'
 import Avatar from 'react-avatar';
-export const Postulante = ({ postulante, index }) => {
+export const Postulante = ({ postulante }) => {
 	const { modalPostulanteState } = useContext(GlobalContext)
 	const [modalPostulante, setModalPostulante] = modalPostulanteState;
 
@@ -23,7 +23,7 @@ export const Postulante = ({ postulante, index }) => {
 				</p>
 			</div>
 			<div className='text-center w-1/6 '>
-				<p className='flex text-xs cursor-pointer items-center' onClick={() => setModalPostulante({ ...modalPostulante, status: true, currentId: index })}><i className="pr-1 fas fa-info-circle text-base text-blue  "></i> VER</p>
+				<p className='flex text-xs cursor-pointer items-center' onClick={() => setModalPostulante({ ...modalPostulante, status: true, currentId: postulante.idPostulante })}><i className="pr-1 fas fa-info-circle text-base text-blue  "></i> VER</p>
 			</div>
 
 		</div>

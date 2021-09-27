@@ -59,7 +59,7 @@ export const Grid = () => {
 													return false
 												}
 											})
-											.map((postulante, index) => postulante ? <Postulante index={index} postulante={postulante} /> : <p>No se encuentra</p>)
+											.map(postulante => postulante ? <Postulante postulante={postulante} /> : <p>No se encuentra</p>)
 									: 
 									<p className='text-center px-10'>No hay postulantes cargados en la base de datos.</p>
 								:
@@ -68,7 +68,7 @@ export const Grid = () => {
 							</div>
 						</div>
 						:
-						<ModalPostulante postulante={postulantes[modalPostulante.currentId]}/>
+						<ModalPostulante postulante={postulantes[0]}/>
 				}
 			</div>
 		</div>
