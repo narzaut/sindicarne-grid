@@ -68,7 +68,7 @@ export const Grid = () => {
 							</div>
 						</div>
 						:
-						<ModalPostulante postulante={postulantes[0]}/>
+						<ModalPostulante postulante={postulantes[modalPostulante.currentIndex]}/>
 				}
 			</div>
 		</div>

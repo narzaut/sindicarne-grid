@@ -2,8 +2,9 @@ import React, { useContext } from 'react';
 import { GlobalContext } from '../context/GlobalState'
 import Avatar from 'react-avatar';
 export const Postulante = ({ postulante }) => {
-	const { modalPostulanteState } = useContext(GlobalContext)
+	const { modalPostulanteState, postulantesState } = useContext(GlobalContext)
 	const [modalPostulante, setModalPostulante] = modalPostulanteState;
+	const [postulantes, setPostulantes] = postulantesState
 
 	return (
 		<div className=' w-80 lg:w-96 p-6 text-center  flex items-center  justify-center '>
@@ -23,7 +24,19 @@ export const Postulante = ({ postulante }) => {
 				</p>
 			</div>
 			<div className='text-center w-1/6 '>
-				<p className='flex text-xs cursor-pointer items-center' onClick={() => setModalPostulante({ ...modalPostulante, status: true, currentId: postulante.idPostulante })}><i className="pr-1 fas fa-info-circle text-base text-blue  "></i> VER</p>
+				<p 
+					className='flex text-xs cursor-pointer items-center'
+					onClick={() => {
+						postulantes.map((postulantee, index) => {
+							if (postulantee.idPostulante == postulante.idPostulante){
+								setModalPostulante({ ...modalPostulante, status: true, currentIndex: index })
+								
+							}
+						})
+					}}
+				>
+					<i className="pr-1 fas fa-info-circle text-base text-blue  "></i> VER
+				</p>
 			</div>
 
 		</div>
