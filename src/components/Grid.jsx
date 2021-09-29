@@ -31,7 +31,7 @@ export const Grid = () => {
 
 	return (
 		<div className='bg-gray-200 flex flex-col w-full flex-grow  items-center justify-center pb-10 mt-6'>
-			<div className='fadeIn h-full rounded-md glass card-shadow w-5/6 lg:w-1/2   pb-10 py-6 my-2 lg:my-6 flex flex-col items-center justify-center '>
+			<div className='fadeIn h-full rounded-md glass card-shadow w-5/6 lg:w-4/5	  pb-10 py-6 my-2 lg:my-6 flex flex-col items-center justify-center '>
 				{loading == true ?
 					<div className='h-80 flex flex-col items-center justify-center gap-2'>
 						<p className='uppercase text-semibold '>Cargando</p><div className=" lds-dual-ring-blue	text-shadow " />
@@ -45,7 +45,16 @@ export const Grid = () => {
 									<SearchBar data={ postulantes }/>
 								</div>
 							</div>
-							<div className=''>
+							<div className='border-b-4 border-green shadow-lg mb-6 rounded-full  pb-2 lg:pt-8 flex w-full text-center invisible h-0 lg:h-auto lg:visible '>
+								<p className='w-1/7 '></p>
+								<p className='w-1/7 font-bold uppercase text-gray-800 text-sm'>Nombre</p>
+								<p className='w-1/7 font-bold uppercase text-gray-800 text-sm'>DNI</p>
+								<p className='w-1/7 font-bold uppercase text-gray-800 text-sm'>Teléfono / Celular</p>
+								<p className='w-1/7 font-bold uppercase text-gray-800 text-sm'>Fecha de nacimiento</p>
+								<p className='w-1/7 font-bold uppercase text-gray-800 text-sm'>Empresa</p>
+								<p className='w-1/7 font-bold uppercase text-gray-800 text-sm'></p>
+							</div>
+							<div className='lg:w-full '>
 								{typeof (postulantes == 'object' && typeof(filteredPostulantes) == 'object') ?
 									filteredPostulantes.length > 0 ? 
 										filteredPostulantes								
