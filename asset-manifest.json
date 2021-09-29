@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/sindicarne-grid/static/css/main.fe5c1d00.chunk.css",
-    "main.js": "/sindicarne-grid/static/js/main.553aa29a.chunk.js",
-    "main.js.map": "/sindicarne-grid/static/js/main.553aa29a.chunk.js.map",
+    "main.css": "/sindicarne-grid/static/css/main.7463a63a.chunk.css",
+    "main.js": "/sindicarne-grid/static/js/main.8bfef095.chunk.js",
+    "main.js.map": "/sindicarne-grid/static/js/main.8bfef095.chunk.js.map",
     "runtime-main.js": "/sindicarne-grid/static/js/runtime-main.5ea4fa46.js",
     "runtime-main.js.map": "/sindicarne-grid/static/js/runtime-main.5ea4fa46.js.map",
-    "static/js/2.8e0a3b88.chunk.js": "/sindicarne-grid/static/js/2.8e0a3b88.chunk.js",
-    "static/js/2.8e0a3b88.chunk.js.map": "/sindicarne-grid/static/js/2.8e0a3b88.chunk.js.map",
+    "static/js/2.6ef7daac.chunk.js": "/sindicarne-grid/static/js/2.6ef7daac.chunk.js",
+    "static/js/2.6ef7daac.chunk.js.map": "/sindicarne-grid/static/js/2.6ef7daac.chunk.js.map",
     "static/js/3.9efa0de9.chunk.js": "/sindicarne-grid/static/js/3.9efa0de9.chunk.js",
     "static/js/3.9efa0de9.chunk.js.map": "/sindicarne-grid/static/js/3.9efa0de9.chunk.js.map",
     "index.html": "/sindicarne-grid/index.html",
-    "static/css/main.fe5c1d00.chunk.css.map": "/sindicarne-grid/static/css/main.fe5c1d00.chunk.css.map",
-    "static/js/2.8e0a3b88.chunk.js.LICENSE.txt": "/sindicarne-grid/static/js/2.8e0a3b88.chunk.js.LICENSE.txt"
+    "static/css/main.7463a63a.chunk.css.map": "/sindicarne-grid/static/css/main.7463a63a.chunk.css.map",
+    "static/js/2.6ef7daac.chunk.js.LICENSE.txt": "/sindicarne-grid/static/js/2.6ef7daac.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.5ea4fa46.js",
-    "static/js/2.8e0a3b88.chunk.js",
-    "static/css/main.fe5c1d00.chunk.css",
-    "static/js/main.553aa29a.chunk.js"
+    "static/js/2.6ef7daac.chunk.js",
+    "static/css/main.7463a63a.chunk.css",
+    "static/js/main.8bfef095.chunk.js"
   ]
 }
