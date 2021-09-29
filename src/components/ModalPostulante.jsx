@@ -22,8 +22,7 @@ export function ModalPostulante({ postulante }) {
 	const handleSave = async () => {
 		const token = JSON.parse(localStorage.getItem('token'))
 		if (!token || await isTokenExpired() == true) history.replace('/auth')
-
-
+		
 		const putResponse = await putStatus(token, postulante.idPostulante, currentStatus)
 		if (putResponse && putResponse.status == 200){
 			const getResponse = await getPostulantes(token)

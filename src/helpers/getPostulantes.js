@@ -4,7 +4,7 @@ export const getPostulantes = async (token) => {
 
 	if (!token ||	 token.ok != true)	return datas
 	
-	await fetch(`//localhost:3030/postulantes`, {
+	await fetch(`https://api.sindicarne.com.ar/postulantes`, {
 		headers: {
 			'Content-Type': 'application/json',
 			'x-auth-token': token.token
