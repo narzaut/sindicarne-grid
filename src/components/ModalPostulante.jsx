@@ -1,14 +1,17 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from "react-router-dom";
-
+import { GlobalContext } from '../context/GlobalState'
+//HELPERS
 import { putStatus } from '../helpers/putStatus';
 import { getPostulantes } from '../helpers/getPostulantes';
 import { capitalize } from '../helpers/capitalize';
-
-import { GlobalContext } from '../context/GlobalState'
-import { InfoItem } from './InfoItem';
-import { arrangeDate } from '../helpers/arrangeDate'
+import { arrangeDate } from '../helpers/arrangeDate';
+import { formatDni } from '../helpers/formatDni';
+import { formatCel } from '../helpers/formatCel';
 import { isTokenExpired } from '../helpers/isTokenExpired';
+//Custom component
+import { InfoItem } from './InfoItem';
+
 export function ModalPostulante({ postulante }) {
 	const { modalPostulanteState, postulantesState } = useContext(GlobalContext)
 	const [modalPostulante, setModalPostulante] = modalPostulanteState;
@@ -41,26 +44,26 @@ export function ModalPostulante({ postulante }) {
 					<p className='text-center  text-xl font-bold text-gray-800 border-b-2 border-green max-w-min'>INFO</p>
 				</div>
 				<InfoItem icon={'fas fa-user'} description='Nombre' value={capitalize(postulante.nombrePostulante)} />
-				<InfoItem icon={'fas fa-id-card'} description='DNI' value={postulante.dniPostulante} />
+				<InfoItem icon={'fas fa-id-card'} description='DNI' value={formatDni(postulante.dniPostulante)} />
 				<InfoItem icon={'fas fa-calendar-alt'} description='Fecha de nacimiento' value={arrangeDate(postulante.fnacimientoPostulante)} />
-				<InfoItem icon={'fas fa-envelope'} description='Email' value={postulante.emailPostulante} />
-				<InfoItem icon={'fas fa-phone-alt'} description='Teléfono / Celular' value={postulante.telPostulante} />
+				<InfoItem icon={'fas fa-envelope'} description='Email' value={postulante.emailPostulante.toLowerCase()} />
+				<InfoItem icon={'fas fa-phone-alt'} description='Teléfono / Celular' value={formatCel(postulante.telPostulante)} />
 				<InfoItem icon={'fas fa-building'} description='Empresa' value={capitalize(postulante.empresaPostulante)} />
 				<InfoItem icon={'fas fa-users'} description='Grupo familiar' value={postulante.estadocivil == 0 ? 'No' : 'Si'} />
 				<div className='flex flex-col pb-2 mb-4 rounded-xl text-gray-700 border-b-2 border-green px-4'>
 					<div className='flex justify-between'>
 						<span className='font-bold'>
 							<i className={"text-gray-700 fas fa-users"}></i>
-							<span className='pl-2'>{'Estado'}</span>
+							<span className='pl-2 '>{'Estado'}</span>
 						</span>
 						<span onClick={ () => {setEditMode(!editMode); setSaveButton(false); setError(null); setCurrentStatus(postulante.activoPostulante) }} className={`transition cursor-pointer outline-none text-xs hover-press-animation shadow-2xl select-none ${editMode == true ? 'text-green ' : 'text-blue'}`}><i className={`fas fa-pencil-alt text-xl  `}/>Editar</span>
 					</div>
 					<div className='flex  pl-2 pt-4 pb-2 justify-between '>
 						<div className='flex'>
 							{currentStatus == true ?
-								<p className='transition duration-500 text-green-400 font-bold'>Activo</p>
+								<p className='transition duration-500 text-shadow-sm text-green-400 font-bold'>Activo</p>
 							:
-								<p className='transition duration-500 text-red-500 font-bold'>Inactivo</p>
+								<p className='transition duration-500 text-shadow-sm text-red-400 font-bold'>Inactivo</p>
 							}
 						</div>
 						{editMode == true ?

@@ -45,14 +45,15 @@ export const Grid = () => {
 									<SearchBar data={ postulantes }/>
 								</div>
 							</div>
-							<div className='border-b-4 border-green shadow-lg mb-6 rounded-full  pb-2 lg:pt-8 flex w-full text-center invisible h-0 lg:h-auto lg:visible '>
-								<p className='w-1/7 '></p>
-								<p className='w-1/7 font-bold uppercase text-gray-800 text-sm'>Nombre</p>
-								<p className='w-1/7 font-bold uppercase text-gray-800 text-sm'>DNI</p>
-								<p className='w-1/7 font-bold uppercase text-gray-800 text-sm'>Teléfono / Celular</p>
-								<p className='w-1/7 font-bold uppercase text-gray-800 text-sm'>Fecha de nacimiento</p>
-								<p className='w-1/7 font-bold uppercase text-gray-800 text-sm'>Empresa</p>
-								<p className='w-1/7 font-bold uppercase text-gray-800 text-sm'></p>
+							<div className='border-b-4 border-green shadow-lg lg:mb-6  rounded-full  pb-2 lg:pt-8 flex w-full text-center invisible h-0 lg:h-auto lg:visible '>
+								<p className='w-1/8 '></p>
+								<p className='w-1/8 font-bold uppercase text-gray-800 text-sm'>Nombre</p>
+								<p className='w-1/8 font-bold uppercase text-gray-800 text-sm'>DNI</p>
+								<p className='w-1/8 font-bold uppercase text-gray-800 text-sm'>Teléfono / Celular</p>
+								<p className='w-1/8 font-bold uppercase text-gray-800 text-sm'>Fecha de nacimiento</p>
+								<p className='w-1/8 font-bold uppercase text-gray-800 text-sm'>Empresa</p>
+								<p className='w-1/8 font-bold uppercase text-gray-800 text-sm'>Estado</p>
+								<p className='w-1/8 font-bold uppercase text-gray-800 text-sm'></p>
 							</div>
 							<div className='lg:w-full '>
 								{typeof (postulantes == 'object' && typeof(filteredPostulantes) == 'object') ?
