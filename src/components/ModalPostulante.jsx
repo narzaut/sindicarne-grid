@@ -1,10 +1,13 @@
 import React, { useContext, useState } from 'react';
+import { useHistory } from "react-router-dom";
+
 import { putStatus } from '../helpers/putStatus';
 import { getPostulantes } from '../helpers/getPostulantes';
 
 import { GlobalContext } from '../context/GlobalState'
 import { InfoItem } from './InfoItem';
 import { arrangeDate } from '../helpers/arrangeDate'
+import { isTokenExpired } from '../helpers/isTokenExpired';
 export function ModalPostulante({ postulante }) {
 	const { modalPostulanteState, postulantesState } = useContext(GlobalContext)
 	const [modalPostulante, setModalPostulante] = modalPostulanteState;
@@ -14,11 +17,16 @@ export function ModalPostulante({ postulante }) {
 	const [editMode, setEditMode] = useState(false)
 	const [saveButton, setSaveButton] = useState(false)
 	const [error, setError] = useState()
+	let history = useHistory();
+
 	const handleSave = async () => {
-		const putResponse = await putStatus(postulante.idPostulante, currentStatus)
-		if (putResponse.status == 200){
-			console.log(putResponse)
-			const getResponse = await getPostulantes()
+		const token = JSON.parse(localStorage.getItem('token'))
+		if (!token || await isTokenExpired() == true) history.replace('/auth')
+
+
+		const putResponse = await putStatus(token, postulante.idPostulante, currentStatus)
+		if (putResponse && putResponse.status == 200){
+			const getResponse = await getPostulantes(token)
 			setPostulantes(getResponse)
 			setEditMode(false)
 			setError(false)
@@ -81,7 +89,7 @@ export function ModalPostulante({ postulante }) {
 						}
 						
 					</div>
-					{error == true ? <p className='flex items-center justify-center text-red-400 font-semibold text-xs text-shadow-sm uppercase py-1'><i class="fas fa-times"></i><p className='pl-2'>Intente más tarde</p></p> : error == false ? <p className='flex items-center justify-center text-green-400 font-semibold text-shadow-sm text-sm'><i class="fas fa-check"></i><p className='pl-2'>Se actualizó el estado</p></p> : ''}
+					{error == true ? <span className='flex items-center justify-center text-red-400 font-semibold text-xs text-shadow-sm uppercase py-1'><i className="fas fa-times"></i><p className='pl-2'>Intente más tarde</p></span> : error == false ? <p className='flex items-center justify-center text-green-400 font-semibold text-shadow-sm text-sm'><i className="fas fa-check"></i><p className='pl-2'>Se actualizó el estado</p></p> : ''}
 				</div>
 			</div>
 			<div className='flex w-full justify-between px-4'>

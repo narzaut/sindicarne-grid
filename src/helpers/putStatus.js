@@ -1,9 +1,6 @@
-import { authenticate  } from "./authenticate"
-
-export const putStatus = async (  id, currentStatus ) => {
-	const token = await authenticate('narz');
-	let datas;
-	if (token.ok != true)	return token.message
+export const putStatus = async (  token, id, currentStatus ) => {
+	let datas = [];
+	if (!token ||	 token.ok != true)	return datas
 	await fetch(`//localhost:3030/postulantes/${id}/status`, {
 			method: "PUT",
 			headers: {
@@ -16,5 +13,6 @@ export const putStatus = async (  id, currentStatus ) => {
 		})
 		.then(res => res.json())
 		.then(data => {datas = data})
+		.catch(err => {datas = err})
 	return datas
 }

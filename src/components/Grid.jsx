@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
+
 //HELPERS
 import { getPostulantes } from '../helpers/getPostulantes'
+import { isTokenExpired } from '../helpers/isTokenExpired'
 //CUSTOM COMPONENTS
 import { Postulante } from './Postulante'
 import { ModalPostulante } from './ModalPostulante'
@@ -13,13 +16,17 @@ export const Grid = () => {
   const [modalPostulante, setModalPostulante] = modalPostulanteState;
 	const [postulantes, setPostulantes] = postulantesState
 	const [filteredPostulantes, setFilteredPostulantes] = filteredPostulantesState 
+	let history = useHistory();
 
 	//CONSUMO API
 	useEffect(async () => {
-		setPostulantes(await getPostulantes())
+		const token = JSON.parse(localStorage.getItem('token'))
+		if (!token || await isTokenExpired() == true) history.replace('/auth')
+		setPostulantes(await getPostulantes(token))
 		if (postulantes) {
 			setLoading(false)
-		}
+		} 
+		
 	}, [])
 
 	return (
@@ -39,7 +46,7 @@ export const Grid = () => {
 								</div>
 							</div>
 							<div>
-								{typeof postulantes == 'object' ?
+								{typeof (postulantes == 'object' && typeof(filteredPostulantes) == 'object') ?
 									postulantes.length > 0 ? 
 										filteredPostulantes								
 											.map(postulante => postulante ? <Postulante postulante={postulante} /> : '')

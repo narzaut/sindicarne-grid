@@ -15,13 +15,13 @@ export const Postulante = ({ postulante }) => {
 				<p className='font-bold text-center'>
 					{postulante.nombrePostulante}
 				</p>
-				<p>
+				<span>
 					DNI: <span className='font-bold'>{postulante.dniPostulante}</span>
 
-				</p>
-				<p>
+				</span>
+				<span>
 					Estado: {postulante.activoPostulante == 1 ? <span className='text-green-500  font-bold'>Activo</span> : <span className='text-red-500  font-bold'>Inactivo</span>}
-				</p>
+				</span>
 			</div>
 			<div className='text-center w-1/6 '>
 				<p 

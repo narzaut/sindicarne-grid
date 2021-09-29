@@ -1,10 +1,8 @@
-import { authenticate  } from "./authenticate"
+import React, { useState } from "react";
+export const getPostulantes = async (token) => {
+	let datas = [];
 
-export const getPostulantes = async () => {
-	let datas;
-	const token = await authenticate('narz')
-
-	if (token.ok != true)	return token.message
+	if (!token ||	 token.ok != true)	return datas
 	
 	await fetch(`//localhost:3030/postulantes`, {
 		headers: {

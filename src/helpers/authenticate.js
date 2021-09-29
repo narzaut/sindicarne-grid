@@ -7,7 +7,8 @@ export const authenticate = async (user) => {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({
-			user: user
+			user: user.username,
+			password: user.password
 		})	
 	})
 	.then(response => {
@@ -16,6 +17,7 @@ export const authenticate = async (user) => {
 	.then(json => {
 		if (json.ok == true) {
 			token = json
+		
 		} else if (json.ok == false){
 			token = json
 		}
