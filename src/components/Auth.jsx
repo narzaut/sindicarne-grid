@@ -15,7 +15,7 @@ export const Auth = () => {
 	useEffect(async () => {
 		const token = JSON.parse(localStorage.getItem('token'))
 		if (token && await isTokenExpired() == false) history.replace('/')
-		if (await isTokenExpired() == true) setError('El login expiró. Ingrese nuevamente.')
+		if (await isTokenExpired() == true) setError('')
 	}, [])
 
 	const handleAuth = async (e) => {
@@ -25,7 +25,7 @@ export const Auth = () => {
 			setToken(auth)
 			history.replace('/')
 		} else {
-			setError(auth.message)
+			setError(auth.ok == false ? 'acceso denegado': 'error. intente más tarde.')
 			setUser({
 				username: '',
 				password: ''
@@ -34,20 +34,21 @@ export const Auth = () => {
 		
 	}
 	return (
-		<div className='flex items-center justify-center gap-4 flex-col  my-20 cursor-pointer p-4 rounded '>
+		<div className='fadeInDown z-0 h-full flex items-center justify-center gap-4 flex-col   p-4 rounded '>
+				<p className='border-b-4 border-green font-semibold text-lg text-gray-800'>INGRESO</p>
 				<form onChange={() => setError(false)} onSubmit={handleAuth} className='flex flex-col'>
 
 					<label className='flex flex-col'>
 						<span>Usuario: </span>
-						<input type='text' value={user.username} onChange={(e) => setUser({...user, username:e.target.value})} className='border-2 border-gray-500 outline-none  py-2 text-center' />
+						<input type='text' value={user.username} onChange={(e) => setUser({...user, username:e.target.value})} className='border-2 border-gray-500 outline-none  py-2 text-center focus-border-green' />
 					</label>
-					<label className='flex flex-col	'>
+					<label className='flex flex-col	pt-4'>
 					<span>Contraseña: </span>
 						<input type='password' value={user.password} onChange={(e) => setUser({...user, password:e.target.value})} className='border-2 border-gray-500 outline-none py-2 text-center'  />
 					</label>
-					<button className='text-center self-center mt-4 px-4 py-2 bg-gray-500 rounded '>Ingresar</button>
+					<button className='text-center text-sm self-center mt-4 px-4 py-2 bg-green rounded  text-gray-200  transition border-4 hover:text-gray-800 border-transparen hover:bg-transparent hover-border-green'>CONTINUAR</button>
 				</form>
-				{error != '' ? <p>{error}</p> : ''}
+				{error != '' ? <p className='fadeIn transition text-red-400 font-bold text-shadow-sm uppercase text-base'>{error}</p> : ''}
 		</div>
 	)
 }

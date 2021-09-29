@@ -7,7 +7,7 @@ export const Postulante = ({ postulante }) => {
 	const [postulantes, setPostulantes] = postulantesState
 
 	return (
-		<div className=' w-80 lg:w-96 p-6 text-center  flex items-center  justify-center '>
+		<div className=' w-80  p-6 lg:p-4 text-center  flex items-center  justify-center '>
 			<div className='w-1/6 select-none	'>
 				<Avatar className='text-shadow rounded-full card-shadow font-bold' name={postulante.nombrePostulante} size="50" />
 			</div>

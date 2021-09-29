@@ -30,7 +30,7 @@ export const Grid = () => {
 	}, [])
 
 	return (
-		<div className='flex flex-col w-full  items-center justify-center pb-10 mt-6'>
+		<div className='bg-gray-200 flex flex-col w-full flex-grow  items-center justify-center pb-10 mt-6'>
 			<div className='fadeIn h-full rounded-md glass card-shadow w-5/6 lg:w-1/2   pb-10 py-6 my-2 lg:my-6 flex flex-col items-center justify-center '>
 				{loading == true ?
 					<div className='h-80 flex flex-col items-center justify-center gap-2'>
@@ -45,13 +45,13 @@ export const Grid = () => {
 									<SearchBar data={ postulantes }/>
 								</div>
 							</div>
-							<div>
+							<div className=''>
 								{typeof (postulantes == 'object' && typeof(filteredPostulantes) == 'object') ?
-									postulantes.length > 0 ? 
+									filteredPostulantes.length > 0 ? 
 										filteredPostulantes								
-											.map(postulante => postulante ? <Postulante postulante={postulante} /> : '')
+											.map(postulante => postulante && <Postulante postulante={postulante} />)
 									: 
-										<p className='text-center px-10'>No hay postulantes cargados en la base de datos.</p>
+										<p className='text-center px-10 uppercase text-gray-800'>No se encontró</p>
 								:
 									<p className='text-center px-10'>Hubo un error. <br /> Intente nuevamente más tarde.</p>
 								}
