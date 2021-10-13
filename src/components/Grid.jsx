@@ -9,6 +9,7 @@ import { Postulante } from './Postulante'
 import { ModalPostulante } from './ModalPostulante'
 import { GlobalContext } from '../context/GlobalState'
 import { SearchBar } from "./SearchBar";
+import { isLogged } from "../helpers/isLogged";
 
 export const Grid = () => {
 	const [loading, setLoading] = useState(true)
@@ -21,6 +22,8 @@ export const Grid = () => {
 	//CONSUMO API
 	useEffect(async () => {
 		const token = JSON.parse(localStorage.getItem('token'))
+		const user = await isLogged()
+		console.log(user)
 		if (!token || await isTokenExpired() == true) history.replace('/auth')
 		setPostulantes(await getPostulantes(token))
 		if (postulantes) {
