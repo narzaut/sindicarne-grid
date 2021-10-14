@@ -1,7 +1,7 @@
 import React, { useContext, useState,  useEffect } from "react";
 import { GlobalContext } from '../context/GlobalState'
 import { useHistory } from 'react-router-dom'
-import { SearchBar } from "./SearchBar";
+import { PostulanteSearchBar } from "./PostulanteSearchBar";
 import { Postulante } from './Postulante'
 import { isTokenExpired } from "../helpers/isTokenExpired";
 
@@ -25,7 +25,7 @@ export const PostulantesGrid = ({ postulantes }) => {
 				<div className='py-4 flex flex-col items-center justify-center w-full'>
 					<p className='  max-w-min font-bold  uppercase border-b-2 border-green text-lg'>Postulantes</p>
 					<div className='w-3/4 lg:w-1/4 pt-4'>
-						<SearchBar data={ postulantes } setFilteredPostulantes={ setFilteredPostulantes }/>
+						<PostulanteSearchBar data={ postulantes } setFilteredPostulantes={ setFilteredPostulantes }/>
 					</div>
 				</div>
 				<div className='border-b-4 border-green shadow-lg lg:mb-6  rounded-full  pb-2 lg:pt-8 flex w-full text-center invisible h-0 lg:h-auto lg:visible '>

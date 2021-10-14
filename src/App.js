@@ -13,6 +13,8 @@ import { Auth } from './components/Auth'
 import { PostulantesGrid } from './components/PostulantesGrid'
 import { PostulanteInfo } from './components/PostulanteInfo'
 import { UsersGrid } from './components/UsersGrid'
+import { UserInfo } from './components/UserInfo'
+
 import { NotFound } from './components/NotFound'
 
 //HELPERS
@@ -56,7 +58,11 @@ function App() {
 					</Route>
 
 					<Route exact path="/usuario"> 	
-						<UsersGrid users={users}/>
+						<UsersGrid />
+					</Route>
+
+					<Route exact path="/usuario/:id"> 	
+						<UserInfo />
 					</Route>
 
 					<Route>

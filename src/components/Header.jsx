@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useLocation, Link } from 'react-router-dom'
 export function Header() {
 	const location = useLocation()
-	console.log(location)
   return (
 		<div className='py-3 flex-col fadeInDown z-10 shadow-2xl border-b-8 border-green bg-header-blue w-full flex items-center justify-center '>
 			<img alt='sindicato de la carne' className='w-2/3 md:w-2/4 lg:w-1/5' src={process.env.PUBLIC_URL + '/assets/logo.png'} />

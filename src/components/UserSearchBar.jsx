@@ -1,16 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { GlobalContext } from '../context/GlobalState'
-export const SearchBar = ({ data, setFilteredPostulantes, user, postulante}) => {
+export const UserSearchBar = ({ data, setFilteredUsers, user, postulante}) => {
 	const [searchTerm, setSearchTerm] = useState('')
 	
 	useEffect(() => {
-		setFilteredPostulantes(data ? data.filter((postulante) => {
+		setFilteredUsers(data ? data.filter((user) => {
 			if (searchTerm == '') {
-				return postulante
-			} else if (postulante.nombrePostulante.toLowerCase().includes(searchTerm.toLowerCase())) {
-				return postulante
-			} else if (postulante.dniPostulante.toLowerCase().includes(searchTerm.toLowerCase())) {
-				return postulante
+				return user
+			} else if (user.nombrePersona.toLowerCase().includes(searchTerm.toLowerCase())) {
+				return user
+			} else if (user.documentoPersona.toLowerCase().includes(searchTerm.toLowerCase())) {
+				return user
 			} else {
 				return false
 			}
