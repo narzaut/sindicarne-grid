@@ -20,10 +20,13 @@ export function PostulanteInfo() {
 	const [postulantes, setPostulantes] = postulantesState
 	const [postulante, setPostulante] = useState(null)
 	const [currentStatus, setCurrentStatus] = useState(null)
+	const [loading, setLoading] = useState(true)
+	const [disabled, setDisabled] = useState(false)
 	useEffect(async () => {
 		if (!token || await isTokenExpired(token)) history.replace('/login');
 		const postulante = await getPostulante(token, id)
 		setPostulante(postulante)
+		postulante || postulante== false && setLoading(false)
 		setCurrentStatus(postulante && postulante.activoPostulante == 1 ? true : postulante && postulante.activoPostulante == 0 ? false : null)
 	}, [])
 
@@ -31,17 +34,23 @@ export function PostulanteInfo() {
 	const [editMode, setEditMode] = useState(false)
 	const [saveButton, setSaveButton] = useState(false)
 	const [error, setError] = useState()
+	const [hidden, setHidden] = useState(false)
+
 	let history = useHistory();
 
 	const handleSave = async () => {
+		setDisabled(true)
 		const token = JSON.parse(localStorage.getItem('token'))
 		if (!token || await isTokenExpired(token) == true) history.replace('/login')
-		
 		const putResponse = await putStatus(token, postulante.idPostulante, currentStatus)
 		if (putResponse && putResponse.status == 200){
 			setEditMode(false)
 			setError(false)
-			setPostulantes(await getPostulantes(token))
+			setHidden(true)
+			const postulants = await getPostulantes(token)
+			setPostulantes(postulants)
+
+			
 		} else {
 			setError(true)
 		}
@@ -49,10 +58,12 @@ export function PostulanteInfo() {
 	return (
 		postulante && postulante.idPostulante ?
 		<div className='px-10 py-6 fadeIn h-full flex flex-col items-center text-left '>
+			
 			<div className=''>
 				<div className='pb-8 flex items-center justify-center'>
 					<p className='text-center  text-xl font-bold text-gray-800 border-b-2 border-green max-w-min'>POSTULANTE</p>
 				</div>
+				
 				<InfoItem icon={'fas fa-user'} description='Nombre' value={capitalize(postulante.nombrePostulante)} />
 				<InfoItem icon={'fas fa-id-card'} description='DNI' value={formatDni(postulante.dniPostulante)} />
 				<InfoItem icon={'fas fa-calendar-alt'} description='Fecha de nacimiento' value={arrangeDate(postulante.fnacimientoPostulante)} />
@@ -66,7 +77,7 @@ export function PostulanteInfo() {
 							<i className={"text-gray-700 fas fa-users"}></i>
 							<span className='pl-2 '>{'Estado'}</span>
 						</span>
-						<span onClick={ () => {setEditMode(!editMode); setSaveButton(false); setError(null); setCurrentStatus(postulante.activoPostulante) }} className={`transition cursor-pointer outline-none text-xs hover-press-animation shadow-2xl select-none ${editMode == true ? 'text-green ' : 'text-blue'}`}><i className={`fas fa-pencil-alt text-xl  `}/>Editar</span>
+						<span onClick={ () => {setEditMode(!editMode); setSaveButton(false); setError(null); setCurrentStatus(postulante.activoPostulante) }} className={`${hidden ? 'hidden ' : ''} transition cursor-pointer outline-none text-xs hover-press-animation shadow-2xl select-none ${editMode == true ? 'text-green ' : 'text-blue'}`}><i className={`fas fa-pencil-alt text-xl  `}/>Editar</span>
 					</div>
 					<div className='flex  pl-2 pt-4 pb-2 justify-between '>
 						<div className='flex'>
@@ -109,14 +120,14 @@ export function PostulanteInfo() {
 			</div>
 			<div className='flex w-full justify-between px-4'>
 				<Link to='/postulante' className='cursor-pointer h-12 w-12  text-center transition fadeIn transition relative'>
-					<i className='transition fas fa-angle-double-left absolute left-0 right-0 text-blue  hover-text-green font-bold text-shadow-sm  press-animation	 text-4xl ' ></i>
-					<p className='text-xs text-gray-800 absolute bottom-0 left-0 right-0'>Volver</p>
+					<i className='top-1 transition fas fa-angle-double-left absolute left-0 right-0 text-blue  hover-text-green font-bold text-shadow-sm  press-animation	 text-4xl ' ></i>
+					<p className='text-xs text-gray-800 absolute -bottom-1 left-0 right-0'>Volver</p>
 				</Link>
 				{(saveButton == true && editMode == true) ? 
-					<div onClick = {handleSave} className='h-12 w-12 pt-1 text-center transition fadeIn transition relative'>
-						<i className='transition far fa-save absolute text-blue left-0 right-0 hover-text-green font-bold text-shadow-sm  press-animation	 text-3xl ' ></i>
-						<p  className='text-xs text-gray-800 absolute bottom-0 left-0 right-0'>Guardar</p>
-					</div>
+					<button disabled={disabled} onClick = {handleSave} className='pt-1 m-0 p-0 text-center transition fadeIn transition relative'>
+						<i className='transition far fa-save text-blue hover-text-green font-bold text-shadow-sm  press-animation	 text-3xl ' ></i>
+						<p  className='text-xs text-gray-800 '>Guardar</p>
+					</button>
 				: 
 					''
 				}
@@ -124,11 +135,16 @@ export function PostulanteInfo() {
 		</div>
 		:
 			postulante && postulante.status ?
-				<p className='py-10 text-center '>No se encontró lo que buscaba.</p>
-			:
-				<div>
-					<p>ERROR!</p>
-					<Link to='/postulante'>Volver</Link>
+			<p className='py-10 text-center '>No se encontró lo que buscaba.</p>
+			: loading ?
+				<div className='flex items-center justify-center text-2xl w-full text-center p-10'>
+					<p className=' w-10 h-10 rounded-full border-l-4 border-t-4 border-r-4 animate-spin border-green'></p>
+					<p className='pl-4'>CARGANDO...</p>
 				</div>
+			:
+			<div className={`p-10`}>
+				<p className='text-red-400 text-shadow-sm text-3xl'>ERROR 500!</p>
+				<Link className='text-center flex items-center justify-center p-1 mt-6 rounded border-green border-2' to='/usuario'>Volver</Link>
+			</div>
 	);
 }

@@ -21,17 +21,22 @@ export function UserInfo() {
 	const { id } = useParams()
 	const { tokenState, usersState } = useContext(GlobalContext)
 	const [token, setToken] = tokenState
+	const [loading, setLoading] = useState(true)
 	const [users, setUsers] = usersState
 	const [user, setUser] = useState(null)
 	const [cuenta, setCuenta] = useState(null)
 	const [editing, setEditing] = useState(false)
+	const [accountLoading, setAccountLoading] = useState(true)
+	 
 	useEffect(async () => {
 		if (!token || await isTokenExpired(token)) history.replace('/login');
 		const usuario = await getPersona(token, id)
 		setUser(usuario)
-		const account = (usuario && usuario.idUsuario) ? await getCuenta(token, usuario.idUsuario) : null
-		console.log(account)
+		const account =  await getCuenta(token, usuario.idUsuario)
 		setCuenta(account)
+		console.log(account)
+		account || account == false && setAccountLoading(false)
+		usuario || usuario == false && setLoading(false)
 	}, [])
 	
 
@@ -41,8 +46,9 @@ export function UserInfo() {
 	
 	return (
 		user && user.idPersona ?
-		<div className='px-10  w-6/7 py-6 fadeIn h-full flex   justify-between  text-left '>
+		<div className='px-10  w-6/7 py-6 fadeIn h-full flex  flex-col lg:flex-row justify-between items-center lg:items-start   text-left '>
 			<div className='w-1/2 flex flex-col items-center justify-center'>
+			
 				<div className='pb-8 flex items-center justify-center w-full '>
 					<p className='text-center  text-xl font-bold text-gray-800 border-b-2 border-green max-w-min '>USUARIO</p>
 				</div>
@@ -58,7 +64,7 @@ export function UserInfo() {
 				
 				
 			</div>
-				<div className='w-1/2 flex flex-col items-center '>
+				<div className='w-full lg:w-1/2 flex flex-col items-center py-10 lg:py-0'>
 					<div className='pb-8 flex items-center justify-center w-full '>
 						<p className='text-center  text-xl font-bold text-gray-800 border-b-2 border-green max-w-min '>CUENTA</p>
 					</div>
@@ -68,6 +74,13 @@ export function UserInfo() {
 							<AccountItem type='password' icon={'fas fa-key'} description='Contraseña' value={'**********'} />
 							<AccountItem type='email' icon={'fas fa-envelope'} description='Email' value={user.mailPersona ? user.mailPersona.toLowerCase() : <p className=' text-red-400 text-shadow-sm'>No está cargado</p>} />
 						</div>
+					: accountLoading == true ?
+					
+						<div className='flex items-center justify-center text-xl w-full text-center p-10'>
+							<p className=' w-6 h-6 rounded-full border-l-4 border-t-4 border-r-4 animate-spin border-green'></p>
+							<p className='pl-4'>CARGANDO...</p>
+						</div>
+					
 					:
 						<p className='text-red-400 text-shadow-sm'>No tiene cuenta</p>
 					}
@@ -79,11 +92,16 @@ export function UserInfo() {
 		:
 			user && user.status ?
 				<p className='py-10 text-center '>No se encontró lo que buscaba.</p>
-			:
-				<div>
-					<p>ERROR!</p>
-					<Link to='/usuario'>Volver</Link>
+			: loading ?
+				<div className='flex items-center justify-center text-2xl w-full text-center p-10'>
+					<p className=' w-10 h-10 rounded-full border-l-4 border-t-4 border-r-4 animate-spin border-green'></p>
+					<p className='pl-4'>CARGANDO...</p>
 				</div>
+			:
+			<div className={`  p-10`}>
+				<p className='text-red-400 text-shadow-sm text-3xl'>ERROR 500!</p>
+				<Link className='text-center flex items-center justify-center p-1 mt-6 rounded border-green border-2' to='/usuario'>Volver</Link>
+			</div>
 	);
 }
 

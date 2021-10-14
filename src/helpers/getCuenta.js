@@ -11,6 +11,17 @@ export const getCuenta = async (token, id) => {
 		}
 	})
 	.then(response => response.json())
-	.then(data => { datas = data })
+	.then(data => { 
+		
+		if (data && data.id_usu > 0){
+			datas = data
+			return
+		}
+		datas = false
+	 })
+	.catch(error => {
+	
+		datas = false
+	})
 	return datas
 }

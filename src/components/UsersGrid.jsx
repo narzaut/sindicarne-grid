@@ -13,6 +13,7 @@ export const UsersGrid = () => {
 	const [token, setToken] = tokenState
 	const [users, setUsers] = usersState
 	const [gridItemsLimit, setGridItemsLimit] = useState(10)
+	const [loading, setLoading] = useState(true)
 	let history = useHistory()
 	useEffect(async () => {
 		if (!token || await isTokenExpired(token)) history.replace('/login')
@@ -20,15 +21,14 @@ export const UsersGrid = () => {
 		setUsers(usuarios)
 	}, [])	
 
-	const [loading, setLoading] = useState(true)
 	const [filteredUsers, setFilteredUsers] = useState(undefined)
 	useEffect(() => {
 		setFilteredUsers(users)
+		users != null && setLoading(false)
 	}, [users])
 	return(
 
-			<div className='flex flex-col h-full min-h-full fadeIn fadeOutflex w-full text-gray-800 items-center  '>
-				
+			<div className=' lg:px-10 flex flex-col h-full min-h-full fadeIn fadeOutflex w-full text-gray-800 items-center  '>
 				<div className='py-4 flex flex-col items-center justify-center w-full'>
 					<p className='  max-w-min font-bold  uppercase border-b-2 border-green text-lg'>Usuarios</p>
 					<div className='w-3/4 lg:w-1/4 pt-4'>
@@ -47,6 +47,13 @@ export const UsersGrid = () => {
 					
 				</div>
 				<div className='lg:w-full '>
+					{loading && 
+						<div className='flex items-center justify-center text-2xl w-full text-center p-10'>
+							<p className=' w-10 h-10 rounded-full border-l-4 border-t-4 border-r-4 animate-spin border-green'></p>
+							<p className='pl-4'>CARGANDO...</p>
+						</div>
+					}
+
 					{filteredUsers ?
 						filteredUsers.length > 0 ? 
 							filteredUsers
@@ -59,7 +66,7 @@ export const UsersGrid = () => {
 								<p className='text-center px-10 uppercase text-gray-800'>No se encontró</p>
 							</div>
 					:
-						<p className='text-center px-10'>Hubo un error. <br /> Intente nuevamente más tarde.</p>
+						<p className={`${loading && 'hidden '} text-center p-10`}>Hubo un error. <br /> Intente nuevamente más tarde.</p>
 					}
 
 					{filteredUsers && filteredUsers.length > gridItemsLimit &&

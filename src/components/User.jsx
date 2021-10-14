@@ -2,9 +2,7 @@ import React, { useContext, useImperativeHandle } from 'react';
 import { GlobalContext } from '../context/GlobalState'
 //HELPERS
 import { arrangeDate } from '../helpers/arrangeDate';
-import { capitalize } from '../helpers/capitalize';
-import { formatDni } from '../helpers/formatDni';
-import { formatCel } from '../helpers/formatCel';
+
 import Avatar from 'react-avatar';
 import { useHistory } from 'react-router';
 export const User = ({ users, user }) => {
@@ -30,10 +28,8 @@ export const User = ({ users, user }) => {
 						<p>Tel Lab: {user.tellabPersona}</p>
 					: user.mailPersona ?
 						<p>Mail: {user.mailPersona}</p>
-					: !user.direccionPersona.includes('/') ?
-						<p>Direccion: {user.direccionPersona}</p>
-					:
-						<p>Fecha de nacimiento: {user.fechanacPersona}</p>
+					: 
+						''
 					}
 				</span>
 			</div>

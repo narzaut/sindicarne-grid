@@ -19,7 +19,7 @@ export const PostulantesGrid = () => {
 	const [filteredPostulantes, setFilteredPostulantes] = useState(undefined)
 	useEffect(() => {
 		setFilteredPostulantes(postulantes)
-		
+		postulantes != null && setLoading(false)
 	}, [postulantes])
 	return(
 
@@ -42,6 +42,12 @@ export const PostulantesGrid = () => {
 					<p className='w-1/8 font-bold uppercase text-gray-800 text-sm'></p>
 				</div>
 				<div className='lg:w-full '>
+				{loading && 
+						<div className='flex items-center justify-center text-2xl w-full text-center p-10'>
+							<p className=' w-10 h-10 rounded-full border-l-4 border-t-4 border-r-4 animate-spin border-green'></p>
+							<p className='pl-4'>CARGANDO...</p>
+						</div>
+					}
 					{filteredPostulantes ?
 						filteredPostulantes.length > 0 ? 
 							filteredPostulantes								
@@ -51,7 +57,7 @@ export const PostulantesGrid = () => {
 								<p className='text-center px-10 uppercase text-gray-800'>No se encontró</p>
 							</div>
 					:
-						<p className='text-center px-10'>Hubo un error. <br /> Intente nuevamente más tarde.</p>
+						<p className={`${loading && 'hidden '} text-center p-10`}>Hubo un error. <br /> Intente nuevamente más tarde.</p>
 					}
 				</div>
 			</div>

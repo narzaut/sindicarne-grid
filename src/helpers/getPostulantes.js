@@ -11,5 +11,6 @@ export const getPostulantes = async (token) => {
 	})
 	.then(response => response.json())
 	.then(data => { datas = data })
+	.catch(error => datas = false)
 	return datas
 }
