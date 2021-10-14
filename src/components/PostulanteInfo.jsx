@@ -21,7 +21,7 @@ export function PostulanteInfo() {
 	const [postulante, setPostulante] = useState(null)
 	const [currentStatus, setCurrentStatus] = useState(null)
 	useEffect(async () => {
-		if (!token || await isTokenExpired(token)) history.replace('/auth');
+		if (!token || await isTokenExpired(token)) history.replace('/login');
 		const postulante = await getPostulante(token, id)
 		setPostulante(postulante)
 		setCurrentStatus(postulante && postulante.activoPostulante == 1 ? true : postulante && postulante.activoPostulante == 0 ? false : null)
@@ -35,7 +35,7 @@ export function PostulanteInfo() {
 
 	const handleSave = async () => {
 		const token = JSON.parse(localStorage.getItem('token'))
-		if (!token || await isTokenExpired(token) == true) history.replace('/auth')
+		if (!token || await isTokenExpired(token) == true) history.replace('/login')
 		
 		const putResponse = await putStatus(token, postulante.idPostulante, currentStatus)
 		if (putResponse && putResponse.status == 200){
@@ -108,7 +108,7 @@ export function PostulanteInfo() {
 				
 			</div>
 			<div className='flex w-full justify-between px-4'>
-				<Link to='/postulantes' className='cursor-pointer h-12 w-12  text-center transition fadeIn transition relative'>
+				<Link to='/postulante' className='cursor-pointer h-12 w-12  text-center transition fadeIn transition relative'>
 					<i className='transition fas fa-angle-double-left absolute left-0 right-0 text-blue  hover-text-green font-bold text-shadow-sm  press-animation	 text-4xl ' ></i>
 					<p className='text-xs text-gray-800 absolute bottom-0 left-0 right-0'>Volver</p>
 				</Link>
@@ -128,7 +128,7 @@ export function PostulanteInfo() {
 			:
 				<div>
 					<p>ERROR!</p>
-					<Link to='/postulantes'>Volver</Link>
+					<Link to='/postulante'>Volver</Link>
 				</div>
 	);
 }

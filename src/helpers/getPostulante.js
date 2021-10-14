@@ -4,7 +4,7 @@ export const getPostulante = async (token, id) => {
 
 	if (!token ||	 token.ok != true)	return datas
 	
-	await fetch(`//localhost:3030/postulantes/${id}`, {
+	await fetch(`//localhost:3030/postulante/${id}`, {
 		headers: {
 			'Content-Type': 'application/json',
 			'x-auth-token': token.token

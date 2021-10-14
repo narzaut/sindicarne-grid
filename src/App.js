@@ -1,17 +1,20 @@
 import React, { useState, useContext, useEffect} from 'react'
-import { GlobalContext } from './context/GlobalState'
-import { Footer } from './components/Footer'
-import { Header } from './components/Header'
-import { PostulanteInfo } from './components/PostulanteInfo'
-import { Auth } from './components/Auth'
-import { NotFound } from './components/NotFound'
 import {
   HashRouter as Router,
   Switch,
   Route,
 	Redirect
 } from "react-router-dom";
+import { GlobalContext } from './context/GlobalState'
+//CUSTOM COMPONENTS
+import { Header } from './components/Header'
+import { Footer } from './components/Footer'
+import { Auth } from './components/Auth'
 import { PostulantesGrid } from './components/PostulantesGrid'
+import { PostulanteInfo } from './components/PostulanteInfo'
+import { UsersGrid } from './components/UsersGrid'
+import { NotFound } from './components/NotFound'
+
 //HELPERS
 import { getPostulantes } from './helpers/getPostulantes'
 import { getUsers } from './helpers/getUsers'
@@ -29,28 +32,31 @@ function App() {
 	}, [token])
 
 	return (
-		
+		<Router>
     <div className='bg-gray-200 flex flex-col items-center justify-between h-screen overflow-y-scroll'>
-			{console.log(postulantes)}
 			<Header />
-			<div className='rounded w-5/6 my-10 py-2 card-shadow glass container flex justify-center items-center'>
-			<Router>
+			<div className='rounded w-5/6 my-10 card-shadow glass container flex justify-center items-center'>
+
       	<Switch>
 
 					<Route exact path="/">
-						<Redirect to="/auth" />
+						<Redirect to="/login" />
 					</Route>
 
-					<Route exact path="/postulantes"> 	
+					<Route path="/login">
+						<Auth />
+					</Route>
+
+					<Route exact path="/postulante"> 	
 						<PostulantesGrid postulantes={postulantes}/>
 					</Route>
 					
-					<Route exact path="/postulantes/:id"> 	
+					<Route exact path="/postulante/:id"> 	
 						<PostulanteInfo />
 					</Route>
 
-      	  <Route path="/auth">
-						<Auth />
+					<Route exact path="/usuario"> 	
+						<UsersGrid users={users}/>
 					</Route>
 
 					<Route>
@@ -58,10 +64,11 @@ function App() {
 					</Route>
       	
 				</Switch>
-    	</Router>
+    	
 			</div>
 			<Footer />	
 		</div>
+		</Router>
   );
 }
 

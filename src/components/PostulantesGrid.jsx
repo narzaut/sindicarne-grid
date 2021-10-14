@@ -10,7 +10,7 @@ export const PostulantesGrid = ({ postulantes }) => {
 	const [token, setToken] = tokenState
 	let history = useHistory()
 	useEffect(async () => {
-		if (!token || await isTokenExpired(token)) history.replace('/auth')
+		if (!token || await isTokenExpired(token)) history.replace('/login')
 	}, [])	
 
 	const [loading, setLoading] = useState(true)
@@ -20,10 +20,11 @@ export const PostulantesGrid = ({ postulantes }) => {
 	}, [postulantes])
 	return(
 
-			<div className='px-10 py-6 flex flex-col h-full min-h-full fadeIn fadeOutflex w-full text-gray-800 items-center  '>
-				<div className=' pb-4 flex flex-col items-center justify-center w-full'>
+			<div className='lg:px-10 flex flex-col h-full min-h-full fadeIn fadeOutflex w-full text-gray-800 items-center  '>
+				
+				<div className='py-4 flex flex-col items-center justify-center w-full'>
 					<p className='  max-w-min font-bold  uppercase border-b-2 border-green text-lg'>Postulantes</p>
-					<div className='w-full px-2 lg:px-0 lg:w-1/4 pt-4'>
+					<div className='w-3/4 lg:w-1/4 pt-4'>
 						<SearchBar data={ postulantes } setFilteredPostulantes={ setFilteredPostulantes }/>
 					</div>
 				</div>
@@ -43,7 +44,9 @@ export const PostulantesGrid = ({ postulantes }) => {
 							filteredPostulantes								
 								.map(postulante => postulante && <Postulante postulantes={postulantes} postulante={postulante} />)
 						: 
-							<p className='text-center px-10 uppercase text-gray-800'>No se encontró</p>
+							<div className='pb-12 py-8'>
+								<p className='text-center px-10 uppercase text-gray-800'>No se encontró</p>
+							</div>
 					:
 						<p className='text-center px-10'>Hubo un error. <br /> Intente nuevamente más tarde.</p>
 					}

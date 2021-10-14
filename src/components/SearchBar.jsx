@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { GlobalContext } from '../context/GlobalState'
-export const SearchBar = ({ data, setFilteredPostulantes}) => {
+export const SearchBar = ({ data, setFilteredPostulantes, user, postulante}) => {
 	const [searchTerm, setSearchTerm] = useState('')
 	
 	useEffect(() => {

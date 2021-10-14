@@ -4,7 +4,7 @@ export const getUsers = async (token) => {
 
 	if (!token ||	 token.ok != true)	return datas
 	
-	await fetch(`//localhost:3030/users`, {
+	await fetch(`//localhost:3030/usuario`, {
 		headers: {
 			'Content-Type': 'application/json',
 			'x-auth-token': token.token

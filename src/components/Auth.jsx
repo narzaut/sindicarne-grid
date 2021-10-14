@@ -16,7 +16,7 @@ export const Auth = () => {
 
 	useEffect(async () => {
 		const token = JSON.parse(localStorage.getItem('token'))
-		if (token && await isTokenExpired(token) == false) history.replace('/postulantes')
+		if (token && await isTokenExpired(token) == false) history.replace('/postulante')
 		if (await isTokenExpired(token) == true) setError('')
 	}, [])
 
@@ -25,7 +25,7 @@ export const Auth = () => {
 		const auth = await authenticate(user)
 		if (auth != null && auth.ok == true){
 			setToken(auth)
-			history.replace('/postulantes')
+			history.replace('/postulante')
 		} else {
 			setError(auth.ok == false ? 'acceso denegado': 'error. intente más tarde.')
 			setUser({
