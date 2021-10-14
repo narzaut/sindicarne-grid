@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from "react-router-dom";
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams, Link } from "react-router-dom";
 import { GlobalContext } from '../context/GlobalState'
-import { Link } from 'react-router-dom'
 //HELPERS
 import { getPostulante } from '../helpers/getPostulante';
 import { putStatus } from '../helpers/putStatus';
@@ -15,7 +13,7 @@ import { isTokenExpired } from '../helpers/isTokenExpired';
 //Custom component
 import { InfoItem } from './InfoItem';
 
-export function ModalPostulante() {
+export function PostulanteInfo() {
 	const { id } = useParams()
 	const { tokenState, postulantesState } = useContext(GlobalContext)
 	const [token, setToken] = tokenState
@@ -73,9 +71,9 @@ export function ModalPostulante() {
 					<div className='flex  pl-2 pt-4 pb-2 justify-between '>
 						<div className='flex'>
 							{currentStatus == true ?
-								<p className='transition duration-500 text-shadow-sm text-green-400 font-bold'>Activo</p>
+								<p className='transition duration-500 text-shadow-sm text-red-300 font-bold'>No archivado</p>
 							: currentStatus == false ?
-								<p className='transition duration-500 text-shadow-sm text-red-400 font-bold'>Inactivo</p>
+								<p className='transition duration-500 text-shadow-sm text-green-300 font-bold'>Archivado</p>
 							:
 								<p className='transition duration-500 text-shadow-sm text-yellow-200 font-bold'>Cargando...</p>
 							}
@@ -97,7 +95,7 @@ export function ModalPostulante() {
 										}} 
 										id="toogleA" type="checkbox" className="sr-only " />
 										<div className="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
-										<div className={`dot absolute w-6 h-6 ${currentStatus == true ? ' bg-green-400 ' : ' bg-red-400'} rounded-full shadow -left-1 -top-1 transition`}></div>
+										<div className={`dot absolute w-6 h-6 ${currentStatus == true ? ' bg-red-300 ' : ' bg-green-300'} rounded-full shadow -left-1 -top-1 transition`}></div>
 									</div>
 								</label>
 							</div>

@@ -8,7 +8,7 @@ import { formatCel } from '../helpers/formatCel';
 import Avatar from 'react-avatar';
 import { useHistory } from 'react-router';
 
-export const Postulante = ({ postulantes, postulante, modalPostulante, setModalPostulante }) => {
+export const Postulante = ({ postulantes, postulante }) => {
 	let history = useHistory()
 	return (
 		<div className='  w-80 lg:w-full   px-6 lg:p-0 lg:py-4 text-center  flex items-center  justify-center '>
@@ -24,7 +24,7 @@ export const Postulante = ({ postulantes, postulante, modalPostulante, setModalP
 
 				</span>
 				<span className='lg:invisible lg:h-0'>
-					Estado: {postulante.activoPostulante == 1 ? <span className='text-green-400 text-shadow-sm font-bold'>Activo</span> : <span className='text-red-400 text-shadow-sm font-bold'>Inactivo</span>}
+					Estado: {postulante.activoPostulante == 1 ? <span className='text-red-300 text-shadow-sm font-bold'>Sin archivar</span> : <span className='text-green-300 text-shadow-sm font-bold'>Archivado</span>}
 				</span>
 			</div>
 			<div className='lg:w-1/8   w-0 invisible lg:visible'>
@@ -40,7 +40,7 @@ export const Postulante = ({ postulantes, postulante, modalPostulante, setModalP
 				{capitalize(postulante.empresaPostulante)}
 			</div>
 			<div className='lg:w-1/8  w-0 invisible lg:visible'>
-				{postulante.activoPostulante == 1 ? <p className='text-green-400 font-bold text-shadow-sm'>Activo</p> : <p className='text-red-400 font-bold text-shadow-sm'>Inactivo</p>}
+				{postulante.activoPostulante == 1 ? <p className='text-red-300 font-bold text-shadow-sm'>No archivado</p> : <p className='text-green-300 font-bold text-shadow-sm'>Archivado</p>}
 			</div>
 			<div className='text-center lg:w-1/8 w-1/6  flex  justify-center'>
 			<div 

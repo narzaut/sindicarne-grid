@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect} from 'react'
 import { GlobalContext } from './context/GlobalState'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
-import { ModalPostulante } from './components/ModalPostulante'
+import { PostulanteInfo } from './components/PostulanteInfo'
 import { Auth } from './components/Auth'
 import { NotFound } from './components/NotFound'
 import {
@@ -33,7 +33,7 @@ function App() {
     <div className='bg-gray-200 flex flex-col items-center justify-between h-screen overflow-y-scroll'>
 			{console.log(postulantes)}
 			<Header />
-			<div className='rounded w-5/6 my-10 card-shadow glass container flex justify-center items-center'>
+			<div className='rounded w-5/6 my-10 py-2 card-shadow glass container flex justify-center items-center'>
 			<Router>
       	<Switch>
 
@@ -46,7 +46,7 @@ function App() {
 					</Route>
 					
 					<Route exact path="/postulantes/:id"> 	
-						<ModalPostulante  />
+						<PostulanteInfo />
 					</Route>
 
       	  <Route path="/auth">
