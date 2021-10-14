@@ -51,7 +51,7 @@ export function PostulanteInfo() {
 		<div className='px-10 py-6 fadeIn h-full flex flex-col items-center text-left '>
 			<div className=''>
 				<div className='pb-8 flex items-center justify-center'>
-					<p className='text-center  text-xl font-bold text-gray-800 border-b-2 border-green max-w-min'>INFO</p>
+					<p className='text-center  text-xl font-bold text-gray-800 border-b-2 border-green max-w-min'>POSTULANTE</p>
 				</div>
 				<InfoItem icon={'fas fa-user'} description='Nombre' value={capitalize(postulante.nombrePostulante)} />
 				<InfoItem icon={'fas fa-id-card'} description='DNI' value={formatDni(postulante.dniPostulante)} />

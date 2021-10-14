@@ -4,19 +4,22 @@ import { useHistory } from 'react-router-dom'
 import { PostulanteSearchBar } from "./PostulanteSearchBar";
 import { Postulante } from './Postulante'
 import { isTokenExpired } from "../helpers/isTokenExpired";
-
-export const PostulantesGrid = ({ postulantes }) => {
-	const { tokenState } = useContext(GlobalContext)
+import { getPostulantes } from "../helpers/getPostulantes";
+export const PostulantesGrid = () => {
+	const { tokenState, postulantesState } = useContext(GlobalContext)
+	const [postulantes, setPostulantes] = postulantesState
 	const [token, setToken] = tokenState
 	let history = useHistory()
 	useEffect(async () => {
 		if (!token || await isTokenExpired(token)) history.replace('/login')
+		setPostulantes(await getPostulantes(token))
 	}, [])	
 
 	const [loading, setLoading] = useState(true)
 	const [filteredPostulantes, setFilteredPostulantes] = useState(undefined)
 	useEffect(() => {
 		setFilteredPostulantes(postulantes)
+		
 	}, [postulantes])
 	return(
 

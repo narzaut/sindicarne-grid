@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { UserSearchBar } from "./UserSearchBar";
 import { User } from './User'
 import { isTokenExpired } from "../helpers/isTokenExpired";
-import { getUsers } from "../helpers/getUsers";
+import { getCuentas } from "../helpers/getCuentas";
 import { getPersonas } from "../helpers/getPersonas";
 
 

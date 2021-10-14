@@ -17,21 +17,13 @@ import { UserInfo } from './components/UserInfo'
 
 import { NotFound } from './components/NotFound'
 
-//HELPERS
-import { getPostulantes } from './helpers/getPostulantes'
-import { getUsers } from './helpers/getUsers'
-import { isTokenExpired } from './helpers/isTokenExpired'
+
 function App() {
 	const [users, setUsers] = useState(null)
-	const { tokenState, postulantesState} = useContext(GlobalContext)
-	const [postulantes, setPostulantes] = postulantesState
+	const { tokenState } = useContext(GlobalContext)
 	const [token, setToken] = tokenState
 	
-	useEffect(async () => {
-		if (!token || await isTokenExpired(token)) return;
-		setPostulantes(await getPostulantes(token))
-		setUsers(await getUsers(token))
-	}, [token])
+
 
 	return (
 		<Router>
@@ -50,7 +42,7 @@ function App() {
 					</Route>
 
 					<Route exact path="/postulante"> 	
-						<PostulantesGrid postulantes={postulantes}/>
+						<PostulantesGrid />
 					</Route>
 					
 					<Route exact path="/postulante/:id"> 	

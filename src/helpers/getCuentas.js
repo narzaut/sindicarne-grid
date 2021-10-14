@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-export const getPersona = async (token, id) => {
-	let datas;
+export const getCuentas = async (token) => {
+	let datas = [];
 
 	if (!token ||	 token.ok != true)	return datas
 	
-	await fetch(`//localhost:3030/persona/${id}`, {
+	await fetch(`//localhost:3030/usuario`, {
 		headers: {
 			'Content-Type': 'application/json',
 			'x-auth-token': token.token
