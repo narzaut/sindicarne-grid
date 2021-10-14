@@ -1,7 +1,7 @@
 export const putStatus = async (  token, id, currentStatus ) => {
 	let datas = [];
 	if (!token ||	 token.ok != true)	return datas
-	await fetch(`https://api.sindicarne.com.ar/postulantes/${id}/status`, {
+	await fetch(`//localhost:3030/postulantes/${id}/status`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",

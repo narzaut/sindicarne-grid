@@ -1,12 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { GlobalContext } from '../context/GlobalState'
-export const SearchBar = ({ data }) => {
+export const SearchBar = ({ data, setFilteredPostulantes}) => {
 	const [searchTerm, setSearchTerm] = useState('')
-	const { filteredPostulantesState } = useContext(GlobalContext)
-	const [filteredPostulantes, setFilteredPostulantes] = filteredPostulantesState 
 	
 	useEffect(() => {
-		setFilteredPostulantes(typeof(data) == 'object' && data.filter((postulante) => {
+		setFilteredPostulantes(data ? data.filter((postulante) => {
 			if (searchTerm == '') {
 				return postulante
 			} else if (postulante.nombrePostulante.toLowerCase().includes(searchTerm.toLowerCase())) {
@@ -16,7 +14,7 @@ export const SearchBar = ({ data }) => {
 			} else {
 				return false
 			}
-		}))
+		}): null)
 	}, [searchTerm])
 	
 

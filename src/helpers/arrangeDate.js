@@ -1,4 +1,5 @@
 export const arrangeDate = (date) => {
+	if (!date) return null
 	let rearrangedDate;
 	rearrangedDate = date.split('-').reverse()
 	rearrangedDate[0] = rearrangedDate[0].substring(0, 2)

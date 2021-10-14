@@ -4,11 +4,10 @@ import { useLocalStorage } from '../hooks/useLocalStorage'
 export const GlobalContext = createContext();
 
 export const Provider = (props) => {
-	const [modalPostulante, setModalPostulante] = useState({ status: false, currentIndex: 0 })
-	const [postulantes, setPostulantes] = useState([])
-	const [filteredPostulantes, setFilteredPostulantes] = useState(postulantes)
+	const [token, setToken] = useLocalStorage('token', null)
+	const [postulantes, setPostulantes] = useState(null)
 	return (
-		<GlobalContext.Provider value={{ filteredPostulantesState: [filteredPostulantes, setFilteredPostulantes], postulantesState: [postulantes, setPostulantes], modalPostulanteState: [modalPostulante, setModalPostulante] }}>
+		<GlobalContext.Provider value={{  postulantesState: [postulantes, setPostulantes], tokenState: [token, setToken] }}>
 			{props.children}
 		</GlobalContext.Provider>
 	)

@@ -6,12 +6,10 @@ import { capitalize } from '../helpers/capitalize';
 import { formatDni } from '../helpers/formatDni';
 import { formatCel } from '../helpers/formatCel';
 import Avatar from 'react-avatar';
+import { useHistory } from 'react-router';
 
-export const Postulante = ({ postulante }) => {
-	const { modalPostulanteState, postulantesState } = useContext(GlobalContext)
-	const [modalPostulante, setModalPostulante] = modalPostulanteState;
-	const [postulantes, setPostulantes] = postulantesState
-
+export const Postulante = ({ postulantes, postulante, modalPostulante, setModalPostulante }) => {
+	let history = useHistory()
 	return (
 		<div className='  w-80 lg:w-full   px-6 lg:p-0 lg:py-4 text-center  flex items-center  justify-center '>
 			<div className='w-1/6 lg:w-1/8 select-none	'>
@@ -50,8 +48,7 @@ export const Postulante = ({ postulante }) => {
 					onClick={() => {
 						postulantes.map((postulantee, index) => {
 							if (postulantee.idPostulante == postulante.idPostulante){
-								setModalPostulante({ ...modalPostulante, status: true, currentIndex: index })
-								
+								history.push(`/postulantes/${postulante.idPostulante}`)
 							}
 						})
 					}}

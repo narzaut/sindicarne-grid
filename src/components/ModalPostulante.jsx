@@ -1,7 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
+import { useParams } from 'react-router-dom'
 import { GlobalContext } from '../context/GlobalState'
+import { Link } from 'react-router-dom'
 //HELPERS
+import { getPostulante } from '../helpers/getPostulante';
 import { putStatus } from '../helpers/putStatus';
 import { getPostulantes } from '../helpers/getPostulantes';
 import { capitalize } from '../helpers/capitalize';
@@ -12,12 +15,21 @@ import { isTokenExpired } from '../helpers/isTokenExpired';
 //Custom component
 import { InfoItem } from './InfoItem';
 
-export function ModalPostulante({ postulante }) {
-	const { modalPostulanteState, postulantesState } = useContext(GlobalContext)
-	const [modalPostulante, setModalPostulante] = modalPostulanteState;
+export function ModalPostulante() {
+	const { id } = useParams()
+	const { tokenState, postulantesState } = useContext(GlobalContext)
+	const [token, setToken] = tokenState
 	const [postulantes, setPostulantes] = postulantesState
+	const [postulante, setPostulante] = useState(null)
+	const [currentStatus, setCurrentStatus] = useState(null)
+	useEffect(async () => {
+		if (!token || await isTokenExpired(token)) history.replace('/auth');
+		const postulante = await getPostulante(token, id)
+		setPostulante(postulante)
+		setCurrentStatus(postulante && postulante.activoPostulante == 1 ? true : postulante && postulante.activoPostulante == 0 ? false : null)
+	}, [])
 
-	const [currentStatus, setCurrentStatus] = useState(postulante.activoPostulante == 1 ? true : false)
+
 	const [editMode, setEditMode] = useState(false)
 	const [saveButton, setSaveButton] = useState(false)
 	const [error, setError] = useState()
@@ -25,20 +37,20 @@ export function ModalPostulante({ postulante }) {
 
 	const handleSave = async () => {
 		const token = JSON.parse(localStorage.getItem('token'))
-		if (!token || await isTokenExpired() == true) history.replace('/auth')
+		if (!token || await isTokenExpired(token) == true) history.replace('/auth')
 		
 		const putResponse = await putStatus(token, postulante.idPostulante, currentStatus)
 		if (putResponse && putResponse.status == 200){
-			const getResponse = await getPostulantes(token)
-			setPostulantes(getResponse)
 			setEditMode(false)
 			setError(false)
+			setPostulantes(await getPostulantes(token))
 		} else {
 			setError(true)
 		}
 	}
 	return (
-		<div className='fadeIn h-full flex flex-col items-center pt-2 text-left '>
+		postulante && postulante.idPostulante ?
+		<div className='px-10 py-6 fadeIn h-full flex flex-col items-center text-left '>
 			<div className=''>
 				<div className='pb-8 flex items-center justify-center'>
 					<p className='text-center  text-xl font-bold text-gray-800 border-b-2 border-green max-w-min'>INFO</p>
@@ -62,8 +74,10 @@ export function ModalPostulante({ postulante }) {
 						<div className='flex'>
 							{currentStatus == true ?
 								<p className='transition duration-500 text-shadow-sm text-green-400 font-bold'>Activo</p>
-							:
+							: currentStatus == false ?
 								<p className='transition duration-500 text-shadow-sm text-red-400 font-bold'>Inactivo</p>
+							:
+								<p className='transition duration-500 text-shadow-sm text-yellow-200 font-bold'>Cargando...</p>
 							}
 						</div>
 						{editMode == true ?
@@ -89,17 +103,17 @@ export function ModalPostulante({ postulante }) {
 							</div>
 						:
 							''	
-						}
-						
+						}			
 					</div>
 					{error == true ? <span className='flex items-center justify-center text-red-400 font-semibold text-xs text-shadow-sm uppercase py-1'><i className="fas fa-times"></i><p className='pl-2'>Intente más tarde</p></span> : error == false ? <p className='flex items-center justify-center text-green-400 font-semibold text-shadow-sm text-sm'><i className="fas fa-check"></i><p className='pl-2'>Se actualizó el estado</p></p> : ''}
 				</div>
+				
 			</div>
 			<div className='flex w-full justify-between px-4'>
-				<div onClick={() => setModalPostulante({ ...modalPostulante, status: !modalPostulante.status })} className='cursor-pointer h-12 w-12  text-center transition fadeIn transition relative'>
+				<Link to='/postulantes' className='cursor-pointer h-12 w-12  text-center transition fadeIn transition relative'>
 					<i className='transition fas fa-angle-double-left absolute left-0 right-0 text-blue  hover-text-green font-bold text-shadow-sm  press-animation	 text-4xl ' ></i>
 					<p className='text-xs text-gray-800 absolute bottom-0 left-0 right-0'>Volver</p>
-				</div>
+				</Link>
 				{(saveButton == true && editMode == true) ? 
 					<div onClick = {handleSave} className='h-12 w-12 pt-1 text-center transition fadeIn transition relative'>
 						<i className='transition far fa-save absolute text-blue left-0 right-0 hover-text-green font-bold text-shadow-sm  press-animation	 text-3xl ' ></i>
@@ -109,7 +123,14 @@ export function ModalPostulante({ postulante }) {
 					''
 				}
 			</div>
-		
 		</div>
+		:
+			postulante && postulante.status ?
+				<p className='py-10 text-center '>No se encontró lo que buscaba.</p>
+			:
+				<div>
+					<p>ERROR!</p>
+					<Link to='/postulantes'>Volver</Link>
+				</div>
 	);
 }

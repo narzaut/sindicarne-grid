@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { authenticate } from '../helpers/authenticate'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { useHistory } from "react-router-dom";
 import { isTokenExpired } from '../helpers/isTokenExpired';
+import { GlobalContext } from '../context/GlobalState';
 export const Auth = () => {
-	const [token, setToken] = useLocalStorage('token', null)
+	const { tokenState } = useContext(GlobalContext)
+	const [token, setToken] = tokenState
 	const [user, setUser] = useState({
 		username: '',
 		password: ''
@@ -14,8 +16,8 @@ export const Auth = () => {
 
 	useEffect(async () => {
 		const token = JSON.parse(localStorage.getItem('token'))
-		if (token && await isTokenExpired() == false) history.replace('/')
-		if (await isTokenExpired() == true) setError('')
+		if (token && await isTokenExpired(token) == false) history.replace('/postulantes')
+		if (await isTokenExpired(token) == true) setError('')
 	}, [])
 
 	const handleAuth = async (e) => {
@@ -23,7 +25,7 @@ export const Auth = () => {
 		const auth = await authenticate(user)
 		if (auth != null && auth.ok == true){
 			setToken(auth)
-			history.replace('/')
+			history.replace('/postulantes')
 		} else {
 			setError(auth.ok == false ? 'acceso denegado': 'error. intente más tarde.')
 			setUser({
